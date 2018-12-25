@@ -31,39 +31,42 @@ def isPointInBoundingBox(x, y, boundingBox):
         if (boundingBox.x < x and (boundingBox.x + boundingBox.w) > x and boundingBox.y < y and (boundingBox.y + boundingBox.h) > y):
                 return True    
         else:
-                return False
+                return False 
 
-def areaOverlapPointSweep(bb1, bb2):
-        area = 0
-        for x in range(bb1.x, bb1.w + bb1.x + 1):
-                for y in range(bb1.y, bb1.h + bb1.y + 1):
-                        if (isPointInBoundingBox(x, y, bb2)):
-                                area += 1
-        return area   
-
-def bbOverlap(bb1, bb2):
-        topRight = Point(bb1.x + bb1.w, bb1.y)
-        bottomLeft = Point(bb1.x, bb1.y + bb1.h)
-        bottomRight = Point(bb1.x + bb1.w, bb1.y + bb1.h)
-        if (isPointInBoundingBox(bb1.x, bb1.y, bb2) or isPointInBoundingBox(topRight.x, topRight.y, bb2) or isPointInBoundingBox(bottomLeft.x, bottomLeft.y, bb2) or isPointInBoundingBox(bottomRight.x, bottomRight.y, bb2)):
+def aabbCollision(aabb1, aabb2):
+        if (aabb1.x < (aabb2.x + aabb2.w) and (aabb1.x + aabb1.w) > aabb2.x and aabb1.y < (aabb2.y + aabb2.h) and (aabb1.h + aabb1.y) > aabb2.y):
                 return True
-        else:
-                return False
+        return False
 
 bBs = getBoxIds(boxIds)
-           
-def findCoord(x, y):
-        bbs = []
-        for i in range(0, len(bBs)):
-                bb = bBs[i]
-                if isPointInBoundingBox(x, y, bb):
-                        return bb.id
-        return None
-xmax = 1500
-ymax = 1500
-overlap = [["." for i in range(ymax)] for i in range(xmax)]
+bBcopy = []
+for i in range(len(bBs)):
+        bBcopy.append(bBs[i].id)
+#p2
+""" for i in range(len(bBs)):
+        overlap = False
+        aabb1 = bBs[i]
+        for j in range(i+1, len(bBs)):
+                aabb2 = bBs[j]
+                if (aabbCollision(aabb1, aabb2)):
+                        overlap = True
+                        try:
+                                bBcopy.remove(aabb2.id)
+                        except:
+                                print('error')
+        if overlap:
+                try:
+                        bBcopy.remove(aabb1.id)
+                except:
+                        print('error')
+print(bBcopy) """
 
-bBsMax = len(bBs)
+#p1
+""" xmax = 1500
+ymax = 1500
+overlap = [["." for i in range(ymax)] for i in range(xmax)] """
+
+""" bBsMax = len(bBs)
 display = 0
 overlapped = False
 for i in range(len(bBs)):
@@ -92,4 +95,4 @@ for y in range(ymax):
                 f.write(str(overlap[y][x]))
         f.write("\r\n");
 print("COUNT ", count)
-f.close()     
+f.close() """     
